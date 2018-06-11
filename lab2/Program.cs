@@ -43,6 +43,7 @@ namespace lab2
         public void SetPos(int x, int y) { PosX = x; PosY = y; }
         public void ChangeDirection() { direction *= -1; }
         public abstract void Move(int length);
+        public abstract Figure DeepCopy();
         public override int GetHashCode()
         {
             int hash = (PosX + PosY);
@@ -50,7 +51,7 @@ namespace lab2
             hash += (int)ToString().ElementAt(0);
             return hash;
         }
-        public abstract override bool Equals(object obj);
+        public abstract bool Equals(object obj);
 
 
     }
@@ -74,6 +75,12 @@ namespace lab2
             return (this.PosX == ((Figure)obj).GetX() && this.PosY == ((Figure)obj).GetY() && this.direction == ((Figure)obj).GetDir()
                     && this.ToString() == ((Figure)obj).ToString());
         }
+
+        public override Figure DeepCopy()
+        {
+            return new Pawn(this.GetX(), this.GetY());
+        }
+
         public static bool operator ==(Pawn obj1, Pawn obj2)
         {
             if (obj1.Equals(null) || obj2.Equals(null)) return false;
@@ -151,6 +158,10 @@ namespace lab2
                         break;
                     }
             }
+        }
+        public override Figure DeepCopy()
+        {
+            return new King(this.GetX(), this.GetY());
         }
         public static bool operator ==(King obj1, King obj2)
         {
@@ -230,6 +241,10 @@ namespace lab2
                         break;
                     }
             }
+        }
+        public override Figure DeepCopy()
+        {
+            return new Queen(this.GetX(), this.GetY());
         }
         public static bool operator ==(Queen obj1, Queen obj2)
         {
@@ -313,6 +328,10 @@ namespace lab2
                     }
             }
         }
+        public override Figure DeepCopy()
+        {
+            return new Knight(this.GetX(), this.GetY());
+        }
         public static bool operator ==(Knight obj1, Knight obj2)
         {
             if (obj1 == null || obj2 == null) return false;
@@ -371,6 +390,10 @@ namespace lab2
                     }
             }
         }
+        public override Figure DeepCopy()
+        {
+            return new Bishop(this.GetX(), this.GetY());
+        }
         public static bool operator ==(Bishop obj1, Bishop obj2)
         {
             if (obj1 == null || obj2 == null) return false;
@@ -425,6 +448,10 @@ namespace lab2
                     }
             }
         }
+        public override Figure DeepCopy()
+        {
+            return new Rook(this.GetX(), this.GetY());
+        }
         public static bool operator ==(Rook obj1, Rook obj2)
         {
             if (obj1 == null || obj2 == null) return false;
@@ -435,6 +462,7 @@ namespace lab2
             if (obj1 == null || obj2 == null) return false;
             return obj1.Equals(obj2);
         }
+
     }
     class Desk
     {
@@ -549,4 +577,5 @@ namespace lab2
         public void ReleaseFigure() => inside = null;
         public Figure GetFigure() { return inside; }
     }
+   
 }
